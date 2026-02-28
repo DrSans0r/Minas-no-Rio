@@ -1,0 +1,213 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Minas no Rio: plataforma de encomendas de comida mineira artesanal no Rio de Janeiro." />
+  <title>Minas no Rio | Encomendas de Comida Mineira no RJ</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="container nav-wrap">
+      <a href="#home" class="logo">Minas no Rio</a>
+      <nav class="main-nav">
+        <a href="#historia">Historia</a>
+        <a href="#cardapio">Cardapio</a>
+        <a href="#pedidos">Encomendas</a>
+        <a href="#avaliacoes">Avaliacoes</a>
+        <a href="#contato">Contato</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="home">
+    <section class="hero">
+      <div class="hero-overlay"></div>
+      <div class="container hero-content">
+        <p class="tag">Sabores mineiros no Rio de Janeiro</p>
+        <h1>Comida mineira artesanal para sua casa, evento ou empresa</h1>
+        <p class="lead">
+          Nao somos restaurante fisico. Somos uma plataforma de encomendas para voce escolher pratos tipicos,
+          montar seu pedido e receber no conforto de onde estiver.
+        </p>
+        <div class="hero-cta">
+          <a class="btn btn-primary" href="#cardapio">Ver cardapio completo</a>
+          <a class="btn btn-outline" href="#pedidos">Fazer encomenda</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="notice">
+      <div class="container notice-box">
+        <strong>Importante:</strong> Operamos apenas com encomendas programadas no Rio de Janeiro.
+        Nao realizamos atendimento de mesa ou consumo no local.
+      </div>
+    </section>
+
+    <section id="historia" class="section history">
+      <div class="container grid-2">
+        <article>
+          <h2>Nossa historia</h2>
+          <p>
+            A Minas no Rio nasceu da vontade de levar o sabor da cozinha da roca para a rotina carioca,
+            com receitas de familia, ingredientes selecionados e acabamento sofisticado.
+          </p>
+          <p>
+            Cada preparo e feito em cozinha parceira certificada, com padrao de qualidade, pontualidade e
+            atendimento humanizado para encomendas do dia a dia ou ocasioes especiais.
+          </p>
+        </article>
+        <div class="history-image" role="img" aria-label="Mesa rustica com pratos mineiros"></div>
+      </div>
+    </section>
+
+    <section id="cardapio" class="section menu">
+      <div class="container">
+        <div class="section-head">
+          <h2>Cardapio completo</h2>
+          <p>Selecione os itens para montar sua encomenda.</p>
+        </div>
+        <div class="menu-grid" id="menuGrid"></div>
+      </div>
+    </section>
+
+    <section class="section promo" id="promocoes">
+      <div class="container">
+        <div class="section-head">
+          <h2>Promocoes da semana</h2>
+        </div>
+        <div class="promo-cards">
+          <article>
+            <h3>Combo Familia Mineira</h3>
+            <p>Feijao tropeiro + frango com quiabo + angu cremoso + 4 doces.</p>
+            <strong>R$ 169,90</strong>
+          </article>
+          <article>
+            <h3>Combo Boteco em Casa</h3>
+            <p>25 paes de queijo + torresmo crocante + molho de pimenta artesanal.</p>
+            <strong>R$ 79,90</strong>
+          </article>
+          <article>
+            <h3>Sobremesa em Dobro</h3>
+            <p>Na compra de 2 potes de doce de leite, leve 10% de desconto.</p>
+            <strong>Valido ate domingo</strong>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="pedidos" class="section order">
+      <div class="container grid-2">
+        <article>
+          <h2>Faca sua encomenda</h2>
+          <p>
+            Escolha no cardapio, informe seus dados e finalize em poucos passos.
+            Entregamos em bairros selecionados do Rio de Janeiro ou retirada em ponto combinado.
+          </p>
+          <ul class="order-details">
+            <li><strong>Entrega:</strong> taxa calculada por bairro</li>
+            <li><strong>Retirada:</strong> sem taxa, horario agendado</li>
+            <li><strong>Pagamentos:</strong> PIX, cartao de credito, debito e dinheiro</li>
+          </ul>
+        </article>
+
+        <form id="orderForm" class="order-form">
+          <label>Nome completo
+            <input type="text" name="customerName" required />
+          </label>
+
+          <label>Telefone (WhatsApp)
+            <input type="tel" name="phone" required />
+          </label>
+
+          <label>Tipo de pedido
+            <select name="type" id="typeSelect" required>
+              <option value="entrega">Entrega</option>
+              <option value="retirada">Retirada</option>
+            </select>
+          </label>
+
+          <label id="addressField">Endereco para entrega
+            <input type="text" name="address" />
+          </label>
+
+          <label>Forma de pagamento
+            <select name="payment" required>
+              <option value="pix">PIX</option>
+              <option value="credito">Cartao de credito</option>
+              <option value="debito">Cartao de debito</option>
+              <option value="dinheiro">Dinheiro</option>
+            </select>
+          </label>
+
+          <label>Itens selecionados
+            <textarea id="selectedItems" name="itemsText" rows="4" readonly placeholder="Adicione itens do cardapio"></textarea>
+          </label>
+
+          <label>Observacoes
+            <textarea name="notes" rows="3" placeholder="Ex: sem pimenta, horario preferido"></textarea>
+          </label>
+
+          <p class="total">Total estimado: <strong id="totalValue">R$ 0,00</strong></p>
+
+          <button type="submit" class="btn btn-primary">Enviar pedido</button>
+          <p id="orderMessage" class="order-message" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+
+    <section id="avaliacoes" class="section testimonials">
+      <div class="container">
+        <div class="section-head">
+          <h2>Avaliacoes de clientes</h2>
+        </div>
+        <div class="review-grid">
+          <article>
+            <p>"Temperos de verdade e entrega impecavel. Pedi para um almoco de familia e todos amaram."</p>
+            <strong>Mariana, Tijuca</strong>
+          </article>
+          <article>
+            <p>"Pao de queijo maravilhoso e frango com quiabo no ponto. Atendimento super atencioso."</p>
+            <strong>Felipe, Botafogo</strong>
+          </article>
+          <article>
+            <p>"Encomendei para evento corporativo e chegou tudo organizado. Virou fornecedor fixo."</p>
+            <strong>Renata, Centro</strong>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="contato" class="section contact">
+      <div class="container contact-grid">
+        <div>
+          <h2>Contato</h2>
+          <p>Atendimento para encomendas e parcerias:</p>
+          <p><strong>WhatsApp:</strong> (21) 99999-0000</p>
+          <p><strong>Email:</strong> contato@minasnorio.com.br</p>
+          <p><strong>Horario:</strong> Segunda a sabado, 9h as 19h</p>
+        </div>
+        <div class="contact-note">
+          <h3>Atencao</h3>
+          <p>
+            Nao possuimos salao fisico para atendimento ao publico. Toda operacao e realizada por encomenda
+            antecipada, com entrega ou retirada agendada.
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>Minas no Rio - Plataforma de encomendas de comida mineira no RJ.</p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

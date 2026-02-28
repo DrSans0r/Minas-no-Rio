@@ -1,0 +1,17 @@
+﻿{
+  "name": "minas-no-rio",
+  "version": "1.0.0",
+  "description": "Plataforma de encomendas de comida mineira no Rio de Janeiro",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": [
+    "comida-mineira",
+    "encomendas",
+    "rio-de-janeiro"
+  ],
+  "author": "",
+  "license": "MIT"
+}
