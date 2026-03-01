@@ -94,7 +94,8 @@
 ];
 
 const menuGrid = document.getElementById("menuGrid");
-const selectedItemsField = document.getElementById("selectedItems");
+const selectedItemsList = document.getElementById("selectedItemsList");
+const selectionFeedback = document.getElementById("selectionFeedback");
 const totalValue = document.getElementById("totalValue");
 const orderForm = document.getElementById("orderForm");
 const orderMessage = document.getElementById("orderMessage");
@@ -102,29 +103,88 @@ const typeSelect = document.getElementById("typeSelect");
 const addressField = document.getElementById("addressField");
 
 const selectedItems = [];
+let feedbackTimeoutId;
 
 const currency = (value) =>
   value.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
 
 function updateSelectedView() {
   if (!selectedItems.length) {
-    selectedItemsField.value = "";
+    selectedItemsList.innerHTML = "<p class=\"selected-items-empty\">Nenhum item selecionado.</p>";
     totalValue.textContent = currency(0);
+    updateMenuOptionCounts();
+    return;
+  }
+  const listHtml = selectedItems
+    .map(
+      (item, idx) => `
+      <div class="selected-item-row">
+        <span>${idx + 1}. ${item.name} (${item.option}) - ${currency(item.price)}</span>
+        <div class="selected-item-actions">
+          <button type="button" class="remove-item-btn" data-index="${idx}" aria-label="Remover ${item.name}">
+            <i class="ph ph-trash" aria-hidden="true"></i>
+          </button>
+        </div>
+      </div>
+    `
+    )
+    .join("");
+  selectedItemsList.innerHTML = listHtml;
+
+  selectedItemsList.querySelectorAll(".remove-item-btn").forEach((button) => {
+    button.addEventListener("click", () => {
+      removeItemFromOrder(Number(button.dataset.index));
+    });
+  });
+
+  const total = selectedItems.reduce((sum, item) => sum + item.price, 0);
+  totalValue.textContent = currency(total);
+  updateMenuOptionCounts();
+}
+
+function showSelectionFeedback(message) {
+  clearTimeout(feedbackTimeoutId);
+  selectionFeedback.textContent = message;
+  selectionFeedback.classList.add("visible");
+
+  feedbackTimeoutId = setTimeout(() => {
+    selectionFeedback.textContent = "";
+    selectionFeedback.classList.remove("visible");
+  }, 1400);
+}
+
+function addItemToOrder(name, option, price, sourceButton) {
+  selectedItems.push({ name, option, price });
+  updateSelectedView();
+  showSelectionFeedback(`${name} (${option}) adicionado.`);
+
+  if (sourceButton) {
+    sourceButton.classList.remove("added");
+    void sourceButton.offsetWidth;
+    sourceButton.classList.add("added");
+  }
+}
+
+function removeItemFromOrder(index) {
+  if (index < 0 || index >= selectedItems.length) {
     return;
   }
 
-  const lines = selectedItems.map((item, idx) =>
-    `${idx + 1}. ${item.name} (${item.option}) - ${currency(item.price)}`
-  );
-
-  selectedItemsField.value = lines.join("\n");
-  const total = selectedItems.reduce((sum, item) => sum + item.price, 0);
-  totalValue.textContent = currency(total);
+  selectedItems.splice(index, 1);
+  updateSelectedView();
 }
 
-function addItemToOrder(name, option, price) {
-  selectedItems.push({ name, option, price });
-  updateSelectedView();
+function getSelectedCount(name, option) {
+  return selectedItems.filter((item) => item.name === name && item.option === option).length;
+}
+
+function updateMenuOptionCounts() {
+  menuGrid.querySelectorAll(".option-count").forEach((badge) => {
+    const { name, option } = badge.dataset;
+    const count = getSelectedCount(name, option);
+    badge.textContent = String(count);
+    badge.classList.toggle("visible", count > 0);
+  });
 }
 
 function renderMenu() {
@@ -135,7 +195,10 @@ function renderMenu() {
           const optionButtons = item.options
             .map(
               (option) =>
-                `<button type="button" class="option-btn" data-name="${item.name}" data-option="${option}" data-price="${item.price}">+ ${option}</button>`
+                `<div class="option-choice">
+                  <button type="button" class="option-btn" data-name="${item.name}" data-option="${option}" data-price="${item.price}">+ ${option}</button>
+                  <span class="option-count" data-name="${item.name}" data-option="${option}" aria-label="Quantidade selecionada">0</span>
+                </div>`
             )
             .join("");
 
@@ -166,9 +229,11 @@ function renderMenu() {
   menuGrid.querySelectorAll(".option-btn").forEach((button) => {
     button.addEventListener("click", () => {
       const { name, option, price } = button.dataset;
-      addItemToOrder(name, option, Number(price));
+      addItemToOrder(name, option, Number(price), button);
     });
   });
+
+  updateMenuOptionCounts();
 }
 
 function toggleAddressField() {
