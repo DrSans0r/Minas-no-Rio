@@ -1,4 +1,8 @@
-﻿:root {
+﻿html {
+  scroll-behavior: smooth;
+}
+
+:root {
   --bg: #f8f2e8;
   --bg-soft: #f2e4cf;
   --paper: #fffaf2;
@@ -805,3 +809,13 @@ textarea {
     margin-top: -1.4rem;
   }
 }
+
+#home,
+#historia,
+#cardapio,
+#pedidos,
+#avaliacoes,
+#contato {
+  scroll-margin-top: 140px;
+}
+
