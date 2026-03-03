@@ -1,98 +1,93 @@
 ﻿const menuData = [
   {
-    category: "Pratos tradicionais",
+    category: "Itens salgados",
     items: [
       {
-        name: "Feijão tropeiro",
-        description: "Feijão, farinha, ovos, couve e bacon artesanal.",
-        price: 32.9,
-        options: ["Individual", "Família"]
-      },
-      {
-        name: "Frango com quiabo",
-        description: "Coxa e sobrecoxa ao molho caseiro com quiabo fresco.",
-        price: 36.9,
-        options: ["Individual", "Família"]
-      },
-      {
-        name: "Tutu à mineira",
-        description: "Feijão batido, farinha tostada e linguiça especial.",
-        price: 29.9,
-        options: ["Individual", "Família"]
-      }
-    ]
-  },
-  {
-    category: "Porções e acompanhamentos",
-    items: [
-      {
-        name: "Torresmo crocante",
-        description: "Porção premium com limão e sal de ervas.",
-        price: 27.9,
-        options: ["250g", "500g"]
-      },
-      {
-        name: "Pão de queijo artesanal",
-        description: "Receita de queijo curado mineiro.",
-        price: 24.9,
-        options: ["12 unidades", "25 unidades"]
-      },
-      {
-        name: "Couve refogada",
-        description: "Cortada fina e puxada no alho dourado.",
-        price: 16.9,
-        options: ["Porção"]
-      }
-    ]
-  },
-  {
-    category: "Sobremesas",
-    items: [
-      {
-        name: "Doce de leite cremoso",
-        description: "Cozimento lento, sabor intenso e textura aveludada.",
-        price: 18.9,
-        options: ["Pote 250g", "Pote 500g"]
-      },
-      {
-        name: "Romeu e Julieta no copo",
-        description: "Creme de queijo com goiabada artesanal.",
-        price: 16.9,
+        name: "Torresmo",
+        description: "Pele suina pururucada, crocante por fora e macia por dentro.",
+        price: 0,
         options: ["Unidade"]
       },
       {
-        name: "Canjica gourmet",
-        description: "Canjica cremosa com coco e canela.",
-        price: 14.9,
-        options: ["Unidade", "Combo 4"]
+        name: "Queijo",
+        description: "Queijo minas artesanal, sabor suave e textura firme.",
+        price: 0,
+        options: ["Unidade"]
+      },
+      {
+        name: "Linguiça",
+        description: "Linguiça caseira temperada com alho e ervas.",
+        price: 0,
+        options: ["Unidade"]
+      },
+      {
+        name: "Farofa",
+        description: "Farofa crocante feita com farinha de mandioca e temperos da casa.",
+        price: 0,
+        options: ["Unidade"]
+      },
+      {
+        name: "Mandioquinha",
+        description: "Mandioquinha cozida e temperada, textura macia e sabor adocicado.",
+        price: 0,
+        options: ["Unidade"]
+      },
+      {
+        name: "Conserva",
+        description: "Legumes em conserva com tempero especial e acidez equilibrada.",
+        price: 0,
+        options: ["Unidade"]
+      },
+      {
+        name: "Biscoito",
+        description: "Biscoito salgado artesanal, leve e crocante.",
+        price: 0,
+        options: ["Unidade"]
+      },
+      {
+        name: "Pimenta",
+        description: "Molho de pimenta artesanal, aroma marcante e picancia ajustada.",
+        price: 0,
+        options: ["Unidade"]
       }
     ]
   },
   {
-    category: "Bebidas",
+    category: "Itens doces",
     items: [
       {
-        name: "Suco natural da estação",
-        description: "Feito na hora com frutas selecionadas.",
-        price: 9.9,
-        options: ["300ml", "500ml"]
+        name: "Mel",
+        description: "Mel puro de abelhas, sabor floral e cor dourada.",
+        price: 0,
+        options: ["Unidade"]
       },
       {
-        name: "Café coado especial",
-        description: "Café mineiro 100% arábica.",
-        price: 7.9,
-        options: ["Copo"]
+        name: "Doce de leite",
+        description: "Doce de leite cremoso, cozido lentamente em receita mineira.",
+        price: 0,
+        options: ["Unidade"]
       },
       {
-        name: "Refresco de goiaba",
-        description: "Leve, refrescante e sem conservantes.",
-        price: 8.9,
-        options: ["300ml", "1L"]
+        name: "Cocada cremosa",
+        description: "Cocada de colher com coco fresco e textura aveludada.",
+        price: 0,
+        options: ["Unidade"]
+      },
+      {
+        name: "Geleia de mocoto",
+        description: "Geleia tradicional de mocoto, doce firme e sabor caracteristico.",
+        price: 0,
+        options: ["Unidade"]
+      },
+      {
+        name: "Goiabada cascao",
+        description: "Goiabada cascao artesanal, feita com pedacos de goiaba.",
+        price: 0,
+        options: ["Unidade"]
       }
     ]
   }
 ];
-
 const menuGrid = document.getElementById("menuGrid");
 const selectedItemsList = document.getElementById("selectedItemsList");
 const selectionFeedback = document.getElementById("selectionFeedback");
@@ -112,7 +107,7 @@ function updateSelectedView() {
   if (!selectedItems.length) {
     selectedItemsList.innerHTML = "<p class=\"selected-items-empty\">Nenhum item selecionado.</p>";
     totalValue.textContent = currency(0);
-    updateMenuOptionCounts();
+    updateMenuControls();
     return;
   }
   const listHtml = selectedItems
@@ -139,7 +134,7 @@ function updateSelectedView() {
 
   const total = selectedItems.reduce((sum, item) => sum + item.price, 0);
   totalValue.textContent = currency(total);
-  updateMenuOptionCounts();
+  updateMenuControls();
 }
 
 function showSelectionFeedback(message) {
@@ -174,16 +169,27 @@ function removeItemFromOrder(index) {
   updateSelectedView();
 }
 
+function removeSingleItem(name, option) {
+  const index = selectedItems.findIndex((item) => item.name === name && item.option === option);
+  if (index === -1) {
+    return;
+  }
+
+  selectedItems.splice(index, 1);
+  updateSelectedView();
+}
+
 function getSelectedCount(name, option) {
   return selectedItems.filter((item) => item.name === name && item.option === option).length;
 }
 
-function updateMenuOptionCounts() {
-  menuGrid.querySelectorAll(".option-count").forEach((badge) => {
-    const { name, option } = badge.dataset;
+function updateMenuControls() {
+  menuGrid.querySelectorAll(".item-action").forEach((action) => {
+    const { name, option } = action.dataset;
     const count = getSelectedCount(name, option);
-    badge.textContent = String(count);
-    badge.classList.toggle("visible", count > 0);
+    const value = action.querySelector(".stepper-value");
+    value.textContent = String(count);
+    action.classList.toggle("is-stepper", count > 0);
   });
 }
 
@@ -192,15 +198,7 @@ function renderMenu() {
     .map((category) => {
       const items = category.items
         .map((item) => {
-          const optionButtons = item.options
-            .map(
-              (option) =>
-                `<div class="option-choice">
-                  <button type="button" class="option-btn" data-name="${item.name}" data-option="${option}" data-price="${item.price}">+ ${option}</button>
-                  <span class="option-count" data-name="${item.name}" data-option="${option}" aria-label="Quantidade selecionada">0</span>
-                </div>`
-            )
-            .join("");
+          const option = item.options[0] || "Unidade";
 
           return `
             <article class="menu-item">
@@ -209,7 +207,16 @@ function renderMenu() {
                 <span>${currency(item.price)}</span>
               </div>
               <small>${item.description}</small>
-              <div class="item-options">${optionButtons}</div>
+              <div class="item-options">
+                <div class="item-action" data-name="${item.name}" data-option="${option}" data-price="${item.price}">
+                  <button type="button" class="buy-btn">Comprar</button>
+                  <div class="qty-stepper" aria-label="Controle de quantidade para ${item.name}">
+                    <button type="button" class="stepper-btn stepper-minus" aria-label="Remover uma unidade de ${item.name}">-</button>
+                    <span class="stepper-value" aria-live="polite">0</span>
+                    <button type="button" class="stepper-btn stepper-plus" aria-label="Adicionar uma unidade de ${item.name}">+</button>
+                  </div>
+                </div>
+              </div>
             </article>
           `;
         })
@@ -226,14 +233,31 @@ function renderMenu() {
 
   menuGrid.innerHTML = cards;
 
-  menuGrid.querySelectorAll(".option-btn").forEach((button) => {
+  menuGrid.querySelectorAll(".buy-btn").forEach((button) => {
     button.addEventListener("click", () => {
-      const { name, option, price } = button.dataset;
+      const action = button.closest(".item-action");
+      const { name, option, price } = action.dataset;
       addItemToOrder(name, option, Number(price), button);
     });
   });
 
-  updateMenuOptionCounts();
+  menuGrid.querySelectorAll(".stepper-plus").forEach((button) => {
+    button.addEventListener("click", () => {
+      const action = button.closest(".item-action");
+      const { name, option, price } = action.dataset;
+      addItemToOrder(name, option, Number(price), action.querySelector(".buy-btn"));
+    });
+  });
+
+  menuGrid.querySelectorAll(".stepper-minus").forEach((button) => {
+    button.addEventListener("click", () => {
+      const action = button.closest(".item-action");
+      const { name, option } = action.dataset;
+      removeSingleItem(name, option);
+    });
+  });
+
+  updateMenuControls();
 }
 
 function toggleAddressField() {
@@ -294,3 +318,4 @@ orderForm.addEventListener("submit", async (event) => {
 
 renderMenu();
 toggleAddressField();
+
