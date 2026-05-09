@@ -1,0 +1,214 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description"
+    content="Minas no Rio: plataforma de encomendas de comida mineira artesanal no Rio de Janeiro." />
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <title>Minas no Rio | Encomendas de Comida Mineira no RJ</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Manrope:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" href="image/favicon.png" type="image/png">
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+
+<body>
+  <header class="topbar">
+    <div class="container nav-wrap">
+      <a href="#home" class="logo"><img src="image/header.png" alt="Minas no Rio"></a>
+      <nav class="main-nav">
+        <a href="#historia">História</a>
+        <a href="#cardapio">Cardápio</a>
+        <a href="#pedidos">Encomendas</a>
+        <a href="#avaliacoes">Avaliações</a>
+        <a href="#contato">Contato</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="home">
+    <section class="hero">
+      <div class="hero-overlay"></div>
+      <div class="container hero-content">
+        <p class="tag">Sabores mineiros no Rio de Janeiro</p>
+        <h1>Comida mineira artesanal para sua casa, evento ou empresa</h1>
+        <p class="lead">
+          Não somos restaurante físico. Somos uma plataforma de encomendas para você escolher pratos típicos,
+          montar seu pedido e receber no conforto de onde estiver.
+        </p>
+        <div class="hero-cta">
+          <a class="btn btn-primary" href="#cardapio">Ver cardápio completo</a>
+          <a class="btn btn-outline" href="#pedidos">Fazer encomenda</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="notice">
+      <div class="container notice-box">
+        <strong>Importante:</strong> Operamos apenas com encomendas programadas no Rio de Janeiro.
+        Não realizamos atendimento de mesa ou consumo no local.
+      </div>
+    </section>
+
+    <section id="historia" class="section history">
+      <div class="container grid-2">
+        <article>
+          <h2>Nossa história</h2>
+          <p>
+            A Minas no Rio nasceu com um propósito simples e forte: levar o sabor autêntico da cozinha mineira
+            para o dia a dia carioca. Reunimos receitas de família, ingredientes selecionados e aquele cuidado
+            artesanal que transforma cada preparo em memória.
+          </p>
+          <p>
+            Não somos restaurante físico. Somos um site feito para você conhecer nossos produtos e fazer sua
+            encomenda com praticidade. Cada item é produzido em cozinha parceira certificada, seguindo padrão de
+            qualidade, pontualidade e atendimento próximo, seja para o cotidiano ou para momentos especiais.
+          </p>
+          <p>
+            Minas atravessa a serra e chega até você, pronta para ser apreciada em casa. 🧀🍯
+          </p>
+        </article>
+        <div class="history-image" role="img" aria-label="Mesa rústica com pratos mineiros"></div>
+      </div>
+    </section>
+
+    <section id="cardapio" class="section menu">
+      <div class="container">
+        <div class="section-head">
+          <h2>Cardápio</h2>
+          <p>Selecione os itens para montar sua encomenda.</p>
+        </div>
+        <div class="menu-grid" id="menuGrid"></div>
+      </div>
+    </section>
+
+    <section id="pedidos" class="section order">
+      <div class="container grid-2">
+        <article>
+          <h2>Faça sua encomenda</h2>
+          <p>
+            Escolha no cardápio, informe seus dados e finalize em poucos passos.
+            Entregamos em bairros selecionados do Rio de Janeiro ou retirada em ponto combinado.
+          </p>
+          <ul class="order-details">
+            <li><strong>Entrega:</strong> taxa calculada por bairro</li>
+            <li><strong>Retirada:</strong> sem taxa, horário agendado</li>
+            <li><strong>Pagamentos:</strong> PIX, cartão de crédito, débito e dinheiro</li>
+          </ul>
+        </article>
+
+        <form id="orderForm" class="order-form">
+          <label>Nome completo
+            <input type="text" name="customerName" required />
+          </label>
+
+          <label>Telefone (WhatsApp)
+            <input type="tel" name="phone" required />
+          </label>
+
+          <label>Tipo de pedido
+            <select name="type" id="typeSelect" required>
+              <option value="entrega">Entrega</option>
+              <option value="retirada">Retirada</option>
+            </select>
+          </label>
+
+          <label id="addressField">Endereço para entrega
+            <input type="text" name="address" />
+          </label>
+
+          <label>Forma de pagamento
+            <select name="payment" required>
+              <option value="pix">PIX</option>
+              <option value="credito">Cartão de crédito</option>
+              <option value="debito">Cartão de débito</option>
+              <option value="dinheiro">Dinheiro</option>
+            </select>
+          </label>
+
+          <label>Itens selecionados</label>
+          <div id="selectedItemsList" class="selected-items-list" aria-live="polite"></div>
+          <p id="selectionFeedback" class="selection-feedback" aria-live="polite"></p>
+
+          <label>Observações
+            <textarea name="notes" rows="3" placeholder="Ex: sem pimenta, horário preferido"></textarea>
+          </label>
+
+          <p class="total">Total estimado: <strong id="totalValue">R$ 0,00</strong></p>
+
+          <button type="submit" class="btn btn-primary">Enviar pedido</button>
+          <p id="orderMessage" class="order-message" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+
+    <section id="avaliacoes" class="section testimonials">
+      <div class="container">
+        <div class="section-head">
+          <h2>Avaliações de clientes</h2>
+        </div>
+        <div class="review-grid">
+          <article class="review-card">
+            <p>"Torresmo bem crocante, queijo artesanal delicioso e farofa no ponto certo. Pedido caprichado."</p>
+            <strong>Mariana, Tijuca</strong>
+          </article>
+          <article class="review-card">
+            <p>"Pedi torresmo, linguiça e pimenta. Chegou tudo na embalagem certinha com o selo da marca."</p>
+            <strong>Luciana, Méier</strong>
+          </article>
+          <article class="review-card">
+            <p>"A linguiça temperada e a mandioquinha chegaram perfeitas. Conserva muito saborosa e atendimento atencioso."</p>
+            <strong>Felipe, Botafogo</strong>
+          </article>
+          <article class="review-card">
+            <p>"Doce de leite e cocada cremosa vieram impecáveis. A embalagem com selo passou muita confiança."</p>
+            <strong>Priscila, Vila Isabel</strong>
+          </article>
+          <article class="review-card">
+            <p>"Doce de leite, cocada cremosa e goiabada cascao fizeram sucesso aqui em casa. Qualidade excelente."</p>
+            <strong>Renata, Centro</strong>
+          </article>
+          <article class="review-card">
+            <p>"Comprei queijo, biscoito e mel para presentear. Visual lindo e tudo identificado com o selo Minas no Rio."</p>
+            <strong>João, Copacabana</strong>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="contato" class="section contact">
+      <div class="container contact-grid">
+        <div>
+          <h2>Contato</h2>
+          <p>Atendimento para encomendas e parcerias:</p>
+          <p><strong>WhatsApp:</strong> (21) 99759-9235</p>
+          <p><strong>Email:</strong> minasnoriomr@gmail.com</p>
+          <p><strong>Horário:</strong> Segunda a sábado, 9h às 19h</p>
+        </div>
+        <div class="contact-note">
+          <h3>Atenção</h3>
+          <p>
+            Não possuímos salão físico para atendimento ao público. Toda operação é realizada por encomenda
+            antecipada, com entrega ou retirada agendada.
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>Minas no Rio - Plataforma de encomendas de comida mineira no RJ.</p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+
+</html>
